@@ -1,0 +1,122 @@
+﻿<Window x:Class="EasySave.DesktopApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lang="clr-namespace:EasySave.DesktopApp.Resources"
+        mc:Ignorable="d"
+        Icon=".\Resources\logo_easysave_V2.ico"
+        Title="{x:Static lang:langage.WindowTitle}" Height="450" Width="Auto">
+    <Window.Resources>
+        <BitmapImage x:Key="Logo_Easysave" UriSource="/Resources/logo_easysave_V2.1.png"/>
+        <Style x:Key="CenteredColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="83*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Width="Auto" Height="Auto" Grid.Row="2" Grid.Column="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#001633" Offset="0.0" />
+                    <GradientStop Color="#0001F5" Offset="1.0" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Width="Auto" Height="Auto" Grid.Row="0" Grid.Column="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#001633" Offset="0.0" />
+                    <GradientStop Color="#0001F5" Offset="1.0" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <TextBlock Text="EasySave" Foreground="White" FontSize="28" FontWeight="Bold" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image HorizontalAlignment="Left" Height="Auto" Width="Auto" Source="{StaticResource ResourceKey=Logo_Easysave}" Grid.Column="1"/>
+
+        <DataGrid Grid.Row="1" Background="Silver" IsReadOnly="True" Name="dgSaveWorks" AutoGenerateColumns="false" ItemsSource="{Binding SaveWork}" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static lang:langage.tabName}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Binding="{Binding NameSaveWork}" IsReadOnly="True" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabProgressBar}"  HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ProgressBar Value="{Binding Percentage}" Minimum="0" Maximum="100" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="{x:Static lang:langage.tabProgressState}" Binding="{Binding ProgressState}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}"  IsReadOnly="True" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabModification}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="👁" Click="Visual_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabPlay}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="⏯︎" Click="Lancer_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabPause}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="⏸" Click="Pause_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabStop}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="⏹️" Click="Stop_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static lang:langage.tabDelete}" HeaderStyle="{StaticResource CenteredColumnHeaderStyle}" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="⌫" Click="Supprimer_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="{x:Static lang:langage.selectAll}" Margin="5" Click="selectAllCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.CreateSaveWork}" Margin="5" Click="AddSaveWorkCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.playSelectedSaveWork}" Margin="5" Click="LaunchSelectedCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.pauseSelectedSaveWork}" Margin="5" Click="pauseSelectedCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.stopSelectedSaveWork}" Margin="5" Click="stopSelectedCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.deleteSelectedSaveWork}" Margin="5" Click="deleteSelectedCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+            <Button Content="{x:Static lang:langage.generate}" Margin="5" Click="generateCommand" Background="Transparent" BorderBrush="Transparent" Foreground="Orange" />
+        </StackPanel>
+    </Grid>
+</Window>
